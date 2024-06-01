@@ -34,6 +34,12 @@ let props = defineProps({
 
                                     <div class="p-2">
                                         <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                            Группа - <span class="mt-3 w-full text-gray-600 dark:text-gray-400">{{ project.group }}</span>
+                                        </h3>
+                                    </div>
+
+                                    <div class="p-2">
+                                        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                                             Описание проекта
                                         </h3>
                                         <div class="mt-3 w-full text-gray-600 dark:text-gray-400">

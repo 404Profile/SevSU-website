@@ -19,7 +19,16 @@ const form = useForm({
     description: '',
     project_photo_path: null,
     presentation_path: null,
+    group: '',
 });
+
+const groups = [];
+const numberOfIterations = 8;
+
+for (let i = 1; i <= numberOfIterations; i++) {
+    const title = `ИТ/б-22-${i}-о`;
+    groups.push({ title });
+}
 
 const createProject = () => {
     if (photoInput.value) {
@@ -148,6 +157,17 @@ const clearPdfFileInput = () => {
                                                 <InputLabel for="description" value="Описание проекта" />
                                                 <textarea id="description" v-model="form.description" type="text" class="block w-full shadow-sm border-none focus:border py-1.5 text-base text-gray-950 transition duration-75 placeholder:text-gray-400 focus:border-amber-600 dark:focus:border-amber-500 focus:ring-amber-600 dark:focus:ring-amber-500 disabled:text-gray-500 dark:text-white dark:placeholder:text-gray-500 dark:disabled:text-gray-400 sm:text-sm sm:leading-6 bg-white/0 dark:bg-white/5 ring-1 dark:ring-white/20 rounded-md mt-1 block" />
                                                 <InputError :message="form.errors.description" class="mt-2" />
+                                            </div>
+
+                                            <div class="col-span-6 sm:col-span-4 pt-2 pb-3">
+                                                <InputLabel for="group" value="Выберите группу" />
+                                                <select v-model="form.group" :class="{'border-red-500' : form.errors.roles}" class="block shadow-sm border-none focus:border py-1.5 text-base text-gray-950 transition duration-75 placeholder:text-gray-400 focus:border-amber-600 dark:focus:border-amber-500 focus:ring-amber-600 dark:focus:ring-amber-500 disabled:text-gray-500 dark:text-white dark:placeholder:text-gray-500 dark:disabled:text-gray-400 sm:text-sm sm:leading-6 bg-white/0 dark:bg-white/5 ring-1 dark:ring-white/20 rounded-md" tabindex="1">
+                                                    <option selected value="" class="dark:bg-zinc-800">Выберите группу</option>
+                                                    <option v-for="(group, index) in groups" :key="index" :value="group.title" class="dark:bg-zinc-800">
+                                                        {{ group.title }}
+                                                    </option>
+                                                </select>
+                                                <InputError :message="form.errors.group" class="mt-2" />
                                             </div>
 
                                             <div class="col-span-6 sm:col-span-4 pb-3">

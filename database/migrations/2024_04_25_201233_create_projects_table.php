@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('presentation_path', 2048)->nullable();
             $table->integer('rating')->default('0');
             $table->foreignId('team')->references('id')->on('teams')->cascadeOnDelete();
+            $table->string('group');
             $table->timestamps();
         });
     }

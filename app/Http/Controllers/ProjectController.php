@@ -49,6 +49,7 @@ class ProjectController extends Controller
             'description' => ['required', 'string', 'max:4000000000'],
             'project_photo_path' => ['required', 'mimes:jpg,jpeg,png', 'max:3072'],
             'presentation_path' => ['nullable', 'mimes:pdf', 'max:5120'],
+            'group' => ['required', 'string', 'max:255'],
         ])->validate();
 
         $project = new project();
@@ -71,6 +72,7 @@ class ProjectController extends Controller
             $project->presentation_path = null;
         }
         $project->team = Auth::user()->currentTeam->id;
+        $project->group = $request['group'];
         $project->save();
 
         return Redirect::route('projects.index')->with('success', 'Проект успешно создан');
@@ -106,11 +108,13 @@ class ProjectController extends Controller
         Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:4000000000'],
+            'group' => ['required', 'string', 'max:255'],
         ])->validate();
 
         $project->forceFill([
             'title' => $request['title'],
             'description' => $request['description'],
+            'group' => $request['group'],
         ])->save();
 
         return Redirect::route('projects.index')->with('success', 'Проект был успешно обновлен.');

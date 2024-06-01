@@ -36,9 +36,9 @@ const logout = () => {
                     <div class="flex-none w-[20rem] h-16 lg:block hidden">
                         <div class="overflow-x-clip w-full">
                             <header class="w-full flex h-16 items-center bg-white px-6 dark:bg-zinc-900 dark:ring-white/10 lg:shadow-sm">
-                                <div>
-                                    Логотип
-                                </div>
+                                <Link :href="route('welcome')">
+                                    <img :src="$page.props.logo" class="h-10 w-auto">
+                                </Link>
                             </header>
                         </div>
                         <nav class="flex-grow flex flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 min-h-screen -mt-16 pt-24 shadow dark:border-r dark:border-zinc-900">

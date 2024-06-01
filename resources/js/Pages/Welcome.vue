@@ -1,5 +1,5 @@
 <script setup>
-import {Head, Link} from '@inertiajs/vue3';
+import {Head, Link, router} from '@inertiajs/vue3';
 import {useDark, useToggle} from '@vueuse/core';
 import {ref, watch} from "vue";
 import PdfShow from "@/Pages/Projects/PdfShow.vue";
@@ -9,9 +9,26 @@ const toggleDark = useToggle(isDark);
 
 defineProps({
     projects: Object,
+    // filters: Object,
 });
 
 const isOpenProjectModal = ref(false);
+const group = ref(null);
+
+const getGroup = () => {
+    router.get('/', { group: group.value }, {
+        preserveState: true,
+        replace: true,
+    })
+}
+
+const resetGroup = () => {
+    group.value = null;
+    router.get('/', { group: group.value }, {
+        preserveState: true,
+        replace: true,
+    })
+}
 
 const tempProject = ref(null);
 
@@ -25,12 +42,20 @@ watch(isOpenProjectModal, () => {
         tempProject.value = null;
     }
 });
+
+const groups = [];
+const numberOfIterations = 8;
+
+for (let i = 1; i <= numberOfIterations; i++) {
+    const title = `ИТ/б-22-${i}-о`;
+    groups.push({ title });
+}
 </script>
 
 <template>
     <Head title="Главная"/>
 
-    <div class="bg-white dark:bg-gray-900">
+    <div class="bg-white dark:bg-gray-900 min-h-screen">
 
         <header>
             <nav class="absolute z-10 w-full border-b border-black/5 dark:border-white/5 lg:border-transparent">
@@ -38,11 +63,9 @@ watch(isOpenProjectModal, () => {
                     <div class="relative flex flex-wrap items-center justify-between gap-6 py-3 md:gap-0 md:py-4">
                         <div class="relative z-20 flex w-full justify-between md:px-0 lg:w-max">
                             <div class="flex items-center space-x-2">
-                                <div aria-hidden="true" class="flex space-x-1">
-                                    <div class="h-4 w-4 rounded-full bg-gray-900 dark:bg-white"></div>
-                                    <div class="h-6 w-2 bg-primary"></div>
-                                </div>
-                                <span class="text-2xl font-bold text-gray-900 dark:text-white">Севгу</span>
+                                <span class="text-2xl font-bold text-gray-900 dark:text-white">
+                                    <img :src="$page.props.logo" class="h-10 w-auto">
+                                </span>
                             </div>
 
                             <div class="relative flex max-h-10 items-center lg:hidden">
@@ -93,15 +116,14 @@ watch(isOpenProjectModal, () => {
         <main class="space-y-40 mb-40">
             <div class="relative" id="home">
                 <div aria-hidden="true" class="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
-                    <div
-                        class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
+                    <div class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-blue-700"></div>
                     <div class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
                 </div>
                 <div class="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
                     <div class="relative pt-72 ml-auto">
                         <div class="lg:w-2/3 text-center mx-auto">
-                            <h1 class="text-gray-900 dark:text-white font-bold text-5xl md:text-6xl xl:text-7xl">
-                                Направления
+                            <h1 class="text-gray-900 dark:text-white font-bold text3xl md:text-6xl md:text-4xl">
+                                Проекты по направлениям
                             </h1>
                         </div>
                     </div>
@@ -110,11 +132,24 @@ watch(isOpenProjectModal, () => {
 
             <div id="blog">
                 <div class="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-                    <div class="mb-12 space-y-2 text-center">
-                        <h2 class="text-3xl font-bold text-gray-800 md:text-4xl dark:text-white">
-                            Проекты
-                        </h2>
+                    <div class="flex justify-end items-center">
+                        <div class="py-4">
+                            <div class="max-w-xs px-3">
+                                <select v-model="group" @change="getGroup" class="block shadow-sm border-none focus:border py-1.5 text-base text-gray-950 transition duration-75 placeholder:text-gray-400 focus:border-amber-600 dark:focus:border-amber-500 focus:ring-amber-600 dark:focus:ring-amber-500 disabled:text-gray-500 dark:text-white dark:placeholder:text-gray-500 dark:disabled:text-gray-400 sm:text-sm sm:leading-6 bg-white/0 dark:bg-white/5 ring-1 dark:ring-white/20 rounded-md">
+                                    <option :value="null" class="dark:bg-zinc-800">Пусто</option>
+                                    <option v-for="group in groups" :value="group.title" class="dark:bg-zinc-800">{{ group.title }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="w-5">
+                            <div @click="resetGroup" v-if="group" class="outline-none transition duration-75 focus-visible:ring-2 cursor-pointer text-gray-400 hover:text-gray-500 focus-visible:ring-amber-600 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:ring-amber-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 
                         <div v-for="project in projects.data"
@@ -142,30 +177,6 @@ watch(isOpenProjectModal, () => {
                 </div>
             </div>
         </main>
-
-        <footer class="py-20 md:py-40">
-            <div class="max-w-7xl mx-auto px-6 md:px-12 xl:px-6">
-                <div class="m-auto md:w-10/12 lg:w-8/12 xl:w-6/12">
-                    <div class="flex flex-wrap items-center justify-between md:flex-nowrap">
-                        <div class="flex w-full justify-center space-x-12 text-gray-600 dark:text-gray-300">
-                            <ul class="list-inside list-disc space-y-8">
-                                <li>
-                                    <a href="#" class="transition hover:text-primary">
-                                        1
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#" class="transition hover:text-primary">
-                                        2
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
 
     </div>
 

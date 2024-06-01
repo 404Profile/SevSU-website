@@ -16,6 +16,7 @@ class Project extends Model
         'presentation_path',
         'rating',
         'team',
+        'group',
     ];
 
     public $appends = ['image_url', 'pdf_url'];
@@ -42,4 +43,11 @@ class Project extends Model
             return null;
         }
     }
+
+//    public function scopeFilter($query, array $filters)
+//    {
+//        $query->when($filters['group'] ?? null, function ($query, $group) {
+//            $query->where('group', $group);
+//        });
+//    }
 }

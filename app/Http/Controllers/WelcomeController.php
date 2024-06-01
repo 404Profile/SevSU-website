@@ -11,8 +11,11 @@ class WelcomeController extends Controller
 {
     public function welcome()
     {
+//        dd(Project::query()->where('group', 'ИТ/б-22-2-о')->get());
         $projects = Project::query()->with('team')->when(FilterRequest::input('search'), function ($query, $search) {
             $query->where('title', 'LIKE', "%{$search}%");
+        })->when(FilterRequest::input('group') ?? null, function ($query, $group) {
+            $query->where('group', $group);
         })->paginate()->withQueryString();
         return Inertia::render('Welcome', [
             'projects' => $projects,
