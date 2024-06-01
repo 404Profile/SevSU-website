@@ -2,6 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import {ref, watch} from "vue";
 import { router, Link } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 let props = defineProps({
     authUserTeams: Object,
@@ -43,9 +44,9 @@ const switchToTeam = (team) => {
                         </h1>
                     </div>
                     <div class="gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
-                        <button @click="isOpenChangeTeamModal = true" class="relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-amber-600 text-white hover:bg-amber-500 focus-visible:ring-amber-500/50 dark:bg-amber-500 dark:hover:bg-amber-400 dark:focus-visible:ring-amber-400/50">
-                            <span>Сменить команду</span>
-                        </button>
+                        <PrimaryButton @click="isOpenChangeTeamModal = true">
+                            Сменить команду
+                        </PrimaryButton>
                     </div>
                 </header>
 
@@ -157,9 +158,9 @@ const switchToTeam = (team) => {
                             <div class="w-full px-6 pb-6">
                                 <div class="gap-3 flex flex-wrap items-center">
                                     <div class="gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
-                                        <button @click="isOpenChangeTeamModal = false" class="relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-amber-600 text-white hover:bg-amber-500 focus-visible:ring-amber-500/50 dark:bg-amber-500 dark:hover:bg-amber-400 dark:focus-visible:ring-amber-400/50">
-                                            <span class="">Закрыть</span>
-                                        </button>
+                                        <PrimaryButton @click="isOpenChangeTeamModal = false">
+                                            Закрыть
+                                        </PrimaryButton>
                                     </div>
                                 </div>
                             </div>
@@ -215,9 +216,9 @@ const switchToTeam = (team) => {
                             <div class="w-full px-6 pb-6">
                                 <div class="gap-3 flex flex-wrap items-center">
                                     <div class="gap-3 flex flex-wrap items-center justify-start shrink-0 sm:mt-7">
-                                        <button @click="isOpenTeamProjectsModal = false" class="relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2 rounded-lg gap-1.5 px-3 py-2 text-sm inline-grid shadow-sm bg-amber-600 text-white hover:bg-amber-500 focus-visible:ring-amber-500/50 dark:bg-amber-500 dark:hover:bg-amber-400 dark:focus-visible:ring-amber-400/50">
-                                            <span class="">Закрыть</span>
-                                        </button>
+                                        <PrimaryButton @click="isOpenTeamProjectsModal = false">
+                                            Закрыть
+                                        </PrimaryButton>
                                     </div>
                                 </div>
                             </div>

@@ -47,7 +47,7 @@ class HandleInertiaRequests extends Middleware
                 ] : null;
             },
 
-            'logo' => config('app.url') . '/assets/images/sym6.png',
+            'url' => config('app.url').'/assets/',
         ];
     }
 }
